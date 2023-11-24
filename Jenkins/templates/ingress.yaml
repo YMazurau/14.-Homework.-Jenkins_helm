@@ -8,7 +8,7 @@ metadata:
 spec:
   ingressClassName: {{ .Values.ingress.className }}
   rules:
-    - host: jenkinsHW14.k8s-8.sa
+    - host: jenkinshw.k8s-8.sa
       http:
         paths:
           - path: /

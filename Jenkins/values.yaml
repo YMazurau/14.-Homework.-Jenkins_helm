@@ -1,6 +1,6 @@
-namespace: jenkinsHW14
+namespace: jenkinshw14
 
-name: jenkins
+name: jekajenkins
 
 replicaCount: 1
 
@@ -66,3 +66,8 @@ ingress:
 service:
   port: 8080
 
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
