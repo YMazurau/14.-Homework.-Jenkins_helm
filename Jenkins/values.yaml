@@ -63,4 +63,6 @@ ingress:
   inghost: jenkinsHW14.k8s-8.sa
   pathType: Prefix
 
+service:
+  port: 8080
 
