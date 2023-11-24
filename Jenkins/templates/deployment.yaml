@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.name }}
+    spec:
+      containers:
+        - name: {{ .Values.name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: JAVA_OPTS
+              value: {{ .Values.env.value1 }}
+            - name: CASC_JENKINS_CONFIG
+              value: {{ .Values.env.value2 }}
+          ports:
+            - name: http-port
+              containerPort: {{ .Values.ports.hport }}
+            - name: jnlp-port
+              containerPort: {{ .Values.ports.jport }}
+          securityContext:
+            runAsUser: 0
+          resources:
+            requests:
+              cpu: {{ .Values.portsresources.requests.cpu }}
+              memory: {{ .Values.portsresources.requests.memory }}
+            limits:
+              cpu: {{ .Values.portsresources.limits.cpu }}
+              memory: {{ .Values.portsresources.limits.memory }}
+          volumeMounts:
+            - name: jenkins-auth-config
+              mountPath: {{ .Values.volumeMounts.mountPath1 }}
+              subPath: {{ .Values.volumeMounts.subPath1 }}
+            - name: jenkins-config-yaml
+              mountPath: {{ .Values.volumeMounts.mountPath2 }}
+              subPath: {{ .Values.volumeMounts.subPath2 }}
+            - name: jenkins-config
+              mountPath: {{ .Values.volumeMounts.mountPath3 }}
+      volumes:
+        - name: jenkins-auth-config
+          configMap:
+            name: {{ .Values.configMap.name1 }}
+        - name: jenkins-config-yaml
+          configMap:
+            name: {{ .Values.configMap.name2 }}
+        - name: jenkins-config
+          nfs:
+            server: {{ .Values.nfs.server }}
+            path: {{ .Values.nfs.path }}

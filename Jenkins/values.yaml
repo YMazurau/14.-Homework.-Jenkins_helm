@@ -1,0 +1,66 @@
+namespace: jenkinsHW14
+
+name: jenkins
+
+replicaCount: 1
+
+image:
+  repository: jfrog.it-academy.by/public/jenkins-ci
+  pullPolicy: IfNotPresent
+  tag: "spishchyk_01"
+
+env:
+  value1: "-Djenkins.install.runSetupWizard=false"
+  name: CASC_JENKINS_CONFIG
+  value2: /var/jenkins_home/casc_configs/jenkins.yaml  
+
+ports:
+  type: ClusterIP
+  hport: 8080
+  jport: 50000
+  ingress: 8080
+
+resources: 
+  requests:
+    cpu: 2
+    memory: 2Gi 
+  limits:
+    cpu: 3
+    memory: 3Gi
+ 
+
+
+volumeMounts:
+  mountPath1: "/var/jenkins_home/init.groovy.d/basic-security.groovy"
+  subPath1: "basic-security.groovy"
+  mountPath2: "/var/jenkins_home/casc_configs/jenkins.yaml"
+  subPath2: "jenkins.yaml"
+  mountPath3: "/var/jenkins_home"
+
+
+configMap:
+  name1: my-basic-config
+  name2: my-jenkins-config
+
+
+nfs:
+  server: 192.168.37.105
+  path: "/mnt/IT-Academy/nfs-data/sa2-25-23/YMazurau/jenkins"  
+  readOnly: false
+  vers: 3
+
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+ingress:
+  className: nginx
+  enabled: true
+  name: helm-j-jenkins-ingress
+  inghost: jenkinsHW14.k8s-8.sa
+  pathType: Prefix
+
+
