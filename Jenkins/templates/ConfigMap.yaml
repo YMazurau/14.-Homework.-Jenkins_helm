@@ -31,7 +31,7 @@ data:
           - kubernetes:
               containerCapStr: "10"
               maxRequestsPerHostStr: "32"
-              jenkinsUrl: "http://jenkinshw14:8080"
+              jenkinsUrl: "http://jenkinshw14.k8s-8.sa:8080"
               name: "kubernetes"
               namespace: "{{ .Values.namespace }}"
               skipTlsVerify: true
@@ -48,6 +48,6 @@ data:
         unclassified:
           location:
             adminAddress: "mazurov1804@gmail.com"
-            url: "http://jenkinshw14.k8s-8.sa/"
+            url: "http://jenkinshw14.k8s-8.sa"
           shell:
             shell: "/bin/bash"

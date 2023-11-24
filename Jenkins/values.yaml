@@ -60,7 +60,7 @@ ingress:
   className: nginx
   enabled: true
   name: helm-j-jenkins-ingress
-  inghost: jenkinsHW14.k8s-8.sa
+  inghost: jenkinshw14.k8s-8.sa
   pathType: Prefix
 
 service:
